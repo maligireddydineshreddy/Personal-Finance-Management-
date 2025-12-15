@@ -20,23 +20,13 @@ connectDB();
 // Define a port (changed from 8000 to avoid conflict with ML API on 8000)
 const PORT = process.env.PORT || 3001;
 
-// CORS configuration
-const allowedOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-  : ['http://localhost:5173', 'http://localhost:3000'];
-
-// Middleware to parse JSON requests
+// CORS configuration - Allow all origins for simplicity
+// This fixes CORS issues in production
 app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: true, // Allow all origins
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(bodyParser.json()); // Use body-parser to parse JSON
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
