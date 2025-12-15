@@ -5,9 +5,9 @@ const connectDB = async () => {
     const connectionString = process.env.MONGODB_URI || "mongodb+srv://someshrocks144:somesh2004@cluster0.gs6wg.mongodb.net/financeApp?retryWrites=true&w=majority&appName=Cluster0";
     
     await mongoose.connect(connectionString, {
-      serverSelectionTimeoutMS: 10000, // 10 seconds
+      serverSelectionTimeoutMS: 30000, // 10 seconds
       socketTimeoutMS: 45000,
-      connectTimeoutMS: 10000,
+      connectTimeoutMS: 30000,
     });
     console.log("✅ Database Connected Successfully!!");
   } catch (error) {
@@ -34,3 +34,4 @@ mongoose.connection.on("reconnected", () => {
 });
 
 module.exports = connectDB;
+
